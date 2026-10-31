@@ -95,3 +95,38 @@ body {
   color: red;
   font-size: 0.65rem;
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem auto 2rem;
+}
+
+.pagination span {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 0.85rem;
+  color: #c2e9e0;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #76c0ae;
+  border-radius: 0.25rem;
+  background-color: transparent;
+  color: #c2e9e0;
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: linear-gradient(180deg, #307e6c, #2b996d);
+  color: #e1eeeb;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
