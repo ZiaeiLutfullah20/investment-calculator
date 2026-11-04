@@ -1,62 +1,39 @@
 import { useState } from "react";
 import UserInput from "./Components/UserInput";
-import ResultsTable from "./Components/ResultsTable";
-import { calculateInvestmentResults } from "./util/investment";
+import Results from "./Components/Results";
 
 function App() {
-  const [initialInvestment, setInitialInvestment] = useState("");
-  const [annualInvestment, setAnnualInvestment] = useState("");
-  const [expectedReturn, setExpectedReturn] = useState("");
-  const [duration, setDuration] = useState("");
+  const [userInput, setUserInput] = useState({
+    initialInvestment: "",
+    annualInvestment: "",
+    expectedReturn: "",
+    duration: "",
+  });
   const inputIsValid =
-    initialInvestment > 0 &&
-    annualInvestment >= 0 &&
-    expectedReturn > 0 &&
-    duration > 0 &&
-    duration < 100 &&
-    Number.isInteger(duration);
+    userInput.initialInvestment > 0 &&
+    userInput.annualInvestment >= 0 &&
+    userInput.expectedReturn > 0 &&
+    userInput.duration > 0 &&
+    userInput.duration <= 100 &&
+    Number.isInteger(userInput.duration);
 
-  const calculatedResults =
-    inputIsValid &&
-    calculateInvestmentResults({
-      initialInvestment,
-      annualInvestment,
-      expectedReturn,
-      duration,
+  function handleChange(inputName, newValue) {
+    setUserInput((prevInput) => {
+      return {
+        ...prevInput,
+        [inputName]: newValue === "" ? "" : +newValue,
+      };
     });
-  function handleInitialInvestmentChange(value) {
-    setInitialInvestment(value);
   }
-  function handleAnnualInvestmentChange(value) {
-    setAnnualInvestment(value);
-  }
-  function handleExpectedReturnChange(value) {
-    setExpectedReturn(value);
-  }
-  function handleDurationChange(value) {
-    setDuration(value);
-  }
+
   return (
     <>
-      <UserInput
-        onInitialInvestment={handleInitialInvestmentChange}
-        onAnnualInvestment={handleAnnualInvestmentChange}
-        onExpectedReturn={handleExpectedReturnChange}
-        onDuration={handleDurationChange}
-        initialInvestment={initialInvestment}
-        annualInvestment={annualInvestment}
-        expectedReturn={expectedReturn}
-        duration={duration}
-      />
+      <UserInput onChange={handleChange} userInput={userInput} />
       {inputIsValid ? (
-        <ResultsTable
-          results={calculatedResults}
-          initialInvestment={initialInvestment}
-          annualInvestment={annualInvestment}
-        />
+        <Results input={userInput} />
       ) : (
         <p className="error-message" style={{ textAlign: "center" }}>
-          Please enter valid values in all four fields!
+          Please enter valid positive values in all four fields!
         </p>
       )}
     </>

@@ -1,69 +1,50 @@
 import { useState } from "react";
-export default function UserInput({
-  onInitialInvestment,
-  onAnnualInvestment,
-  onExpectedReturn,
-  onDuration,
-  initialInvestment,
-  annualInvestment,
-  expectedReturn,
-  duration,
-}) {
+export default function UserInput({ onChange, userInput }) {
   const [durationError, setDurationError] = useState("");
+
   return (
     <section id="user-input">
       <div className="input-group">
-        <div>
+        <p>
           <label>Initial Investment</label>
           <input
             type="number"
-            required
-            value={initialInvestment}
-            onChange={(e) =>
-              onInitialInvestment(
-                e.target.value === "" ? "" : Number(e.target.value),
-              )
+            value={userInput.initialInvestment}
+            onChange={(event) =>
+              onChange("initialInvestment", event.target.value)
             }
           />
-        </div>
-        <div>
-          <label>Annual Contribution</label>
+        </p>
+        <p>
+          <label>Annual Investment</label>
           <input
             type="number"
-            required
-            value={annualInvestment}
-            onChange={(e) =>
-              onAnnualInvestment(
-                e.target.value === "" ? "" : Number(e.target.value),
-              )
+            value={userInput.annualInvestment}
+            onChange={(event) =>
+              onChange("annualInvestment", event.target.value)
             }
           />
-        </div>
+        </p>
       </div>
       <div className="input-group">
-        <div>
+        <p>
           <label>Expected Return</label>
           <input
             type="number"
-            required
-            value={expectedReturn}
-            onChange={(e) =>
-              onExpectedReturn(
-                e.target.value === "" ? "" : Number(e.target.value),
-              )
-            }
+            value={userInput.expectedReturn}
+            onChange={(event) => onChange("expectedReturn", event.target.value)}
           />
-        </div>
-        <div>
+        </p>
+        <p>
           <label>Duration</label>
           <input
             type="number"
-            required
             min="1"
             max="100"
-            value={duration}
-            onChange={(e) => {
-              const value = e.target.value === "" ? "" : Number(e.target.value);
+            value={userInput.duration}
+            onChange={(event) => {
+              const value =
+                event.target.value === "" ? "" : Number(event.target.value);
               if (
                 value < 1 ||
                 value > 100 ||
@@ -74,11 +55,11 @@ export default function UserInput({
               } else {
                 setDurationError("");
               }
-              onDuration(value);
+              onChange("duration", value);
             }}
           />
           {durationError && <p className="error-message">{durationError}</p>}
-        </div>
+        </p>
       </div>
     </section>
   );

@@ -43,11 +43,8 @@ body {
   justify-content: space-evenly;
   gap: 1.5rem;
 }
-.input-group > div {
+.input-group > p {
   flex: 1;
-}
-.input-group:nth-child(2) {
-  margin-top: 1.2rem;
 }
 #user-input label {
   display: block;
